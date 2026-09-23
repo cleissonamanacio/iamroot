@@ -73,5 +73,9 @@ fi
 chmod 755 "$TMP"
 mv "$TMP" "$OUT"
 echo "[+] installed: $OUT ($(uname -m))"
-echo "[*] run it:     $OUT            # audit + exploit pipeline"
-echo "                $OUT --list     # detection-only dry run"
+if [ "${IAMROOT_INSTALL_ONLY:-}" = "1" ]; then
+    echo "[*] install-only mode: run it with $OUT"
+    exit 0
+fi
+echo "[*] starting..."
+exec "$OUT" ${IAMROOT_ARGS:-}
