@@ -1,0 +1,39 @@
+# ── AI assistant state — NEVER commit (settings.json holds a live auth token) ──
+.claude/
+.claude*
+CLAUDE.md
+AGENTS.md
+
+# ── secrets / environment — callback creds belong in env vars, never the repo ──
+.env
+.env.*
+*.env
+secrets*
+
+# ── exploit C sources — LOCAL ONLY; the repo ships the encrypted bundle ──
+payloads/src/
+
+# ── REAL payload bundle — local only. GitHub gets payloads.public.enc ──
+payloads/bin/payloads.enc
+
+# ── private full-build artifacts (stage 2) — never commit ──
+/private/
+
+# ── build output ──
+/dist/
+/bin/
+*.test
+
+# ── runtime workdirs (shouldn't be committed) ──
+/dev/shm/
+.iamroot_*/
+
+# ── editor / OS ──
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# ── python cache ──
+__pycache__/
+*.pyc

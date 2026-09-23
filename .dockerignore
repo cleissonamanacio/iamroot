@@ -1,0 +1,9 @@
+# keep the build context minimal — only what the Dockerfile COPYs
+.git
+.github
+.claude
+dist/
+scripts/__pycache__/
+**/__pycache__/
+*.pyc
+.DS_Store

@@ -1,0 +1,33 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+
+      - name: vet
+        run: go vet ./...
+
+      - name: test (with race detector)
+        run: go test -race ./...
+
+      - name: python helper selftests (embedded)
+        run: go run ./cmd/iamroot --selftest-py
+
+      - name: cross-compile linux/amd64 + linux/arm64
+        run: make build-amd64 build-arm64
+
+      - name: sanity-check artifacts
+        run: |
+          file dist/iamroot-linux-amd64 dist/iamroot-linux-arm64
+          test "$(go run ./cmd/iamroot --suggest </dev/null | grep -c '\[+\]')" -ge 0

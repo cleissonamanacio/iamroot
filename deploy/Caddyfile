@@ -1,0 +1,28 @@
+
+{$IAMROOT_SITE::8080}
+
+root * /srv/iamroot
+
+handle /private/* {
+    uri strip_prefix /private
+    root * /srv/private
+    header {
+        Content-Type application/octet-stream
+        Cache-Control "no-cache"
+        X-Content-Type-Options nosniff
+    }
+    file_server
+}
+
+header {
+    Content-Type application/octet-stream
+    Cache-Control "no-cache"
+    X-Content-Type-Options nosniff
+}
+
+file_server
+
+log {
+    output stdout
+    format console
+}
