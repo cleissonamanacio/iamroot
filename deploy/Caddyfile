@@ -1,5 +1,5 @@
 
-{$IAMROOT_SITE::8080}
+:8080
 
 root * /srv/iamroot
 
