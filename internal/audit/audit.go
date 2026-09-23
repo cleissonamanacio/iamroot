@@ -178,7 +178,7 @@ func collectCapabilities(a *AuditFindings) []Finding {
 	interesting := []string{"cap_setuid", "cap_dac_override", "cap_chown",
 		"cap_setgid", "cap_sys_admin", "cap_fowner"}
 
-	cmd := exec.Command("sh", "-c", "getcap -r / 2>/dev/null || true")
+	cmd := exec.Command("sh", "-c", "timeout 15 getcap -r / 2>/dev/null || true")
 	res, _ := cmd.Output()
 	for _, line := range strings.Split(string(res), "\n") {
 		lower := strings.ToLower(line)
