@@ -15,7 +15,7 @@ The **audit** and the **exploitation** are deliberately split:
 Flow on a target:
 
 ```
-bash -c "$(curl -fsSL https://DOMAIN/iamroot)"   ← installs + runs the audit binary
+bash -c "$(curl -fsSL https://DOMAIN/install)"   ← installs + runs the audit binary
         │  audit + detection report
         ▼
   audit build fetches https://DOMAIN/stage2      ← internal/stage2
@@ -69,8 +69,8 @@ Self-hosters: build from this repo and serve it anywhere — point
 
 The installer detects the architecture (amd64/arm64), downloads the right
 static ELF, verifies it against `SHA256SUMS` when available, and makes it
-executable. `IAMROOT_BASE`, `IAMROOT_OWNER`, `IAMROOT_REPO` env vars override
-the download source; `--to DIR` sets the install directory.
+executable, then runs it. `IAMROOT_BASE` overrides the download source;
+`IAMROOT_ARGS` passes flags; `IAMROOT_INSTALL_ONLY=1` installs without running.
 
 ### Manual
 
