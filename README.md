@@ -61,7 +61,7 @@ the target's own `python3` (and optionally `gcc` for compile-dependent CVEs).
 From a GitHub release (works once the repo is published — see *Distribution*):
 
 ```bash
-bash -c "$(curl -fsSL https://iamroot.victorsec.com/iamroot)"
+bash -c "$(curl -fsSL https://iamroot.victorsec.com/install)"
 ```
 
 Self-hosters: build from this repo and serve it anywhere — point

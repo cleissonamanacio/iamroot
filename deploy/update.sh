@@ -23,4 +23,4 @@ done
 echo "[+] mirror updated and healthy"
 echo "[+] staged artifacts:"
 curl -fsSL http://localhost:8081/SHA256SUMS
-echo "[*] one-liner: bash -c \"\$(curl -fsSL https://iamroot.victorsec.com/iamroot)\""
+echo "[*] one-liner: bash -c \"\$(curl -fsSL https://iamroot.victorsec.com/install)\""
