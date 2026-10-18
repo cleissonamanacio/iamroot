@@ -18,6 +18,7 @@ payloads/bin/payloads.enc
 
 # ── real payload runtime — local only, built with -tags iamrootfull ──
 internal/payload/payload_full.go
+payloads/payloads_full_test.go
 
 # ── private full-build artifacts (stage 2) — never commit ──
 /private/
