@@ -3,6 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        CB_HOST: ${IAMROOT_CB_HOST:-}
     image: iamroot-mirror:latest
     container_name: iamroot-mirror
     restart: unless-stopped

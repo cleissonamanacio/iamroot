@@ -1,14 +1,16 @@
 FROM golang:1.24-alpine AS build
+ARG CB_HOST=
 WORKDIR /src
 COPY go.mod ./
 COPY pylib/ pylib/
 COPY payloads/ payloads/
 COPY cmd/ cmd/
 COPY internal/ internal/
-RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 \
-        go build -trimpath -ldflags="-s -w" -o /out/iamroot-linux-amd64 ./cmd/iamroot \
+RUN LF="-s -w" && { [ -n "$CB_HOST" ] && LF="$LF -X main.cbHost=$CB_HOST" || true; } \
+        && GOOS=linux GOARCH=amd64 CGO_ENABLED=0 \
+        go build -trimpath -ldflags="$LF" -o /out/iamroot-linux-amd64 ./cmd/iamroot \
         && GOOS=linux GOARCH=arm64 CGO_ENABLED=0 \
-        go build -trimpath -ldflags="-s -w" -o /out/iamroot-linux-arm64 ./cmd/iamroot
+        go build -trimpath -ldflags="$LF" -o /out/iamroot-linux-arm64 ./cmd/iamroot
 
 FROM caddy:2-alpine
 COPY --from=build /out/ /srv/iamroot/
