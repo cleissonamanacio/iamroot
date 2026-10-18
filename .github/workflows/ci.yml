@@ -25,7 +25,7 @@ jobs:
         run: go run ./cmd/iamroot --selftest-py
 
       - name: cross-compile linux/amd64 + linux/arm64
-        run: make build-amd64 build-arm64
+        run: make build-amd64 build-arm64 TAGS=
 
       - name: sanity-check artifacts
         run: |

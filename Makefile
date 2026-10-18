@@ -1,12 +1,13 @@
 LDFLAGS := -s -w
+TAGS ?= iamrootfull
 
 .PHONY: build build-amd64 build-arm64 all native test vet selftest dryrun checksums stage clean fmt
 
 build build-amd64:
-	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -tags iamrootfull -ldflags="$(LDFLAGS)" -o dist/iamroot-linux-amd64 ./cmd/iamroot
+	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -tags $(TAGS) -ldflags="$(LDFLAGS)" -o dist/iamroot-linux-amd64 ./cmd/iamroot
 
 build-arm64:
-	GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -tags iamrootfull -ldflags="$(LDFLAGS)" -o dist/iamroot-linux-arm64 ./cmd/iamroot
+	GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -tags $(TAGS) -ldflags="$(LDFLAGS)" -o dist/iamroot-linux-arm64 ./cmd/iamroot
 
 all: build-amd64 build-arm64
 
@@ -41,9 +42,9 @@ CB_LD := -X main.cbHost=$(CB_HOST)
 endif
 
 private-bundle:
-	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -tags iamrootfull \
+	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -tags $(TAGS) \
 		-ldflags="-s -w $(CB_LD)" -o dist/iamroot-linux-amd64 ./cmd/iamroot
-	GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -tags iamrootfull \
+	GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -tags $(TAGS) \
 		-ldflags="-s -w $(CB_LD)" -o dist/iamroot-linux-arm64 ./cmd/iamroot
 	mkdir -p private
 	cp dist/iamroot-linux-amd64 private/iamroot-full-linux-amd64
