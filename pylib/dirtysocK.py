@@ -83,7 +83,7 @@ def main() -> int:
         return 0
 
     status, body = http_unix(sock, "GET", "/v2/snaps")
-    common.warn(f"auto account-create failed (HTTP {status}); snapd may be patched")
+    common.warn("auto account-create failed; snapd may be patched")
     common.info("for the v2 snap-install path, POST a crafted snap to /v2/snaps")
     return 1
 
