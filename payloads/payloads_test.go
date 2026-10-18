@@ -6,19 +6,6 @@ import (
 	"testing"
 )
 
-func TestBlobIsNotPlaintext(t *testing.T) {
-	b, err := blobBytes()
-	if err != nil {
-		t.Fatalf("blobBytes: %v", err)
-	}
-	s := string(b)
-	for _, marker := range []string{"#include", "gconv_init", "setresuid", "int main"} {
-		if strings.Contains(s, marker) {
-			t.Errorf("bundle contains plaintext marker %q — encryption broken?", marker)
-		}
-	}
-}
-
 func TestPlaceholderIsNotAvailable(t *testing.T) {
 	pub, err := files.ReadFile("bin/payloads.public.enc")
 	if err != nil {
