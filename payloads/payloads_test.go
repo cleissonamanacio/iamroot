@@ -2,7 +2,6 @@ package payloads
 
 import (
 	"encoding/base64"
-	"os"
 	"strings"
 	"testing"
 )
